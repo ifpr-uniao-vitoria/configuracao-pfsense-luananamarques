@@ -1,0 +1,78 @@
+#####config switch##########
+
+
+enable
+configure terminal
+ip routing
+vlan 10
+name pc
+exit
+vlan 20
+name lap
+exit
+
+
+interface range fa0/13-24
+switchport mode access
+switchport access vlan 20
+no shut
+exit
+
+
+interface vlan10
+description Gateway para vlan 10
+ip address 192.168.10.1 255.255.255.0
+no shutdown
+exit
+
+interface vlan20
+description Gateway para vlan 20
+ip address 192.168.20.1 255.255.255.0
+no shutdown
+exit
+exit 
+copy running startup
+
+-------------
+
+
+interface g0/2
+switchport mode trunk
+no shut
+exit
+exit
+copy running startup
+
+
+NO PRIMEIRO SWITCH
+interface g0/1
+switchport mode trunk
+no shut
+exit
+exit
+copy running startup
+
+
+NO ROTEADOR
+enable
+configure terminal
+
+interface g0/1.10
+description Gateway para a VLAN 10
+encapsulation dot1q 10
+ip address 192.168.10.1 255.255.255.0
+exit
+
+interface g0/1.20
+description Gateway para a VLAN 20
+encapsulation dot1q 20
+ip address 192.168.20.1 255.255.255.0
+exit
+
+interface g0/1
+no shutdown
+exit
+exit
+copy running startup
+
+
